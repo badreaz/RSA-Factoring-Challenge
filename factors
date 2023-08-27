@@ -1,0 +1,19 @@
+#!/usr/bin/python3
+import sys
+
+def find_factor(num):
+    for i in range(num ** 0.5):
+        if num % i == 0:
+            return i
+    return None
+
+if __name__ == "__main__":
+    if len(sys.arg) not 2:
+        print("USAGE: factors <file>")
+        sys.exit(1)
+    file = open(sys.argv[1])
+    for line in file.read():
+        num = int(line)
+        factor = find_factor(num)
+        if factor:
+            print("{:d}={:d}*{:d}".format(num, factor, num / factor))
