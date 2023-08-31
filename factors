@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-import sys
+import sys, random
+from math import gcd
 
 def find_factor(num):
     if num <= 3:
@@ -8,11 +9,20 @@ def find_factor(num):
         return 2
     elif num % 3 == 0:
         return 3
-
-    for i in range(4, int(num ** 0.5) + 1):
+    ret = num
+    while ret == num:
+        x = y = 2
+        c = random.randint(2, num - 1)
+        f = lambda x: x ** 2 + c
+        ret = 1
+        while ret == 1:
+            x = f(x) % num
+            y = f(f(y)) % num
+            ret = gcd((x - y) % num, num)
+    """for i in range(4, int(num ** 0.5) + 1):
         if num % i == 0:
-            return i
-    return None
+            return i"""
+    return ret
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
