@@ -13,12 +13,24 @@ def find_factor(num):
     while ret == num:
         x = y = 2
         c = random.randint(2, num - 1)
+        f = lambda x: (x ** 2 + c) % num
+        d = 1
+        while d == 1:
+            x = f(x)
+            y = f(f(y))
+            d = gcd(abs(x - y), num)
+            if d != num:
+                return d
+    '''
+    while ret == num:
+        x = y = 2
+        c = random.randint(2, num - 1)
         f = lambda x: x ** 2 + c
         ret = 1
         while ret == 1:
             x = f(x) % num
             y = f(f(y)) % num
-            ret = gcd(abs(x - y) % num, num)
+            ret = gcd(abs(x - y) % num, num) '''
     """for i in range(4, int(num ** 0.5) + 1):
         if num % i == 0:
             return i"""
