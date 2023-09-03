@@ -2,8 +2,17 @@
 import sys, random
 from math import gcd
 
+def power(a, d, num):
+    result = 1
+    while d > 0:
+        if d % 2 == 1:
+            result = (result * a) % num
+        a = (a ** 2) % num
+        d //= 2
+    return result
+
 def isprime(num):
-    if num <= 1:
+    if num <= 1 or num == 4:
         return False
     if num == 2 or num == 3:
         return True
@@ -16,7 +25,7 @@ def isprime(num):
         d //= 2
     for i in range(15):
         a = random.randint(2, num - 2)
-        ret = pow(a, d, num)
+        ret = power(a, d, num)
         if ret == 1 or ret == num - 1:
             continue
         for j in range(r - 1):
@@ -43,7 +52,7 @@ def find_factor(num):
             x = f(x)
             y = f(f(y))
             d = gcd(abs(x - y), num)
-            if d != num and isprime(d) and isprime(num // d):
+            if d != num and isprime(d):
                 return d
     return d
 if __name__ == "__main__":
