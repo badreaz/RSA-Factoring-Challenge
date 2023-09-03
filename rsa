@@ -1,0 +1,59 @@
+#!/usr/bin/python3
+import sys, random
+from math import gcd
+
+def isprime(num):
+    if num <= 1:
+        return False
+    if num == 2 or num == 3:
+        return True
+    if num % 2 == 0:
+        return False
+    r = 0
+    d = num - 1
+    while d % 2 == 0:
+        r += 1
+        d //= 2
+    for i in range(10):
+        a = random.randint(2, num - 2)
+        ret = pow(a, d, num)
+        if ret == 1 or ret == num - 1:
+            continue
+        for j in range(r - 1):
+            ret = (ret ** 2) % num
+            if ret == num - 1:
+                break
+            return False
+    return True
+
+def find_factor(num):
+    if num <= 3:
+        return num
+    elif num % 2 == 0:
+        return 2
+    elif num % 3 == 0:
+        return 3
+    d = num
+    while d == num:
+        x = y = 2
+        c = random.randint(2, num - 1)
+        f = lambda x: (x ** 2 + c) % num
+        d = 1
+        while d == 1:
+            x = f(x)
+            y = f(f(y))
+            d = gcd(abs(x - y), num)
+            if d != num and isprime(d) and isprime(num // d):
+                return d
+    return d
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("USAGE: factors <file>")
+        sys.exit(1)
+    file = open(sys.argv[1])
+    for line in file:
+        if line:
+            num = int(line.strip())
+        factor = find_factor(num)
+        if factor:
+            print("{:d}={:d}*{:d}".format(num, num // factor, factor))
