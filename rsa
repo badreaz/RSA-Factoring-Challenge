@@ -56,4 +56,4 @@ if __name__ == "__main__":
             num = int(line.strip())
         factor = find_factor(num)
         if factor:
-            print("{:d}={:d}*{:d}".format(num, num // factor, factor))
+            print("{:d}={:d}*{:d}".format(num, factor, num // factor))
