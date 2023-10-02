@@ -40,9 +40,10 @@ def is_square(n):
         for i in range(int(n // 2) + 1):
             if (i * i) == n:
                 return True
-            return False
+    return False
 
 def find_factor(num):
+    """
     for a in range(int((num ** 0.5) + 1), num):
         b = (a * a) - num
         if not is_square(b):
@@ -52,7 +53,7 @@ def find_factor(num):
         q = a - b
         if isprime(q) and isprime(p) and p * q == num:
             return p
-    """
+    
     while True:
         x = y = random.randint(1, num - 1)
         c = random.randint(2, num - 1)
@@ -64,7 +65,14 @@ def find_factor(num):
             d = gcd(abs(x - y), num)
             if d != num and isprime(d):
                 return d
-    return d"""
+    return d """
+    x, y, d = 2, 2, 1
+    f = lambda x: (x ** 2 + 1) % num
+    while d == 1:
+        x = f(x)
+        y = f(f(y))
+        d = gcd(abs(x - y), num)
+    return d
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
